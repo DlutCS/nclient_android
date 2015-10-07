@@ -22,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintResource(R.color.app_main_color);
+            tintManager.setStatusBarTintResource(R.color.app_blue);
             tintManager.setStatusBarTintEnabled(true);
         }
     }

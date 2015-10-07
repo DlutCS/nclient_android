@@ -1,6 +1,7 @@
 package org.dlutcs.nclient_android.view;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import org.dlutcs.nclient_android.R;
+import org.dlutcs.nclient_android.util.Utils;
 import org.dlutcs.nclient_android.model.Category;
 
 import java.util.ArrayList;
@@ -19,19 +21,22 @@ import butterknife.InjectView;
 /**
  * Created by linwei on 15-10-5.
  */
-public class CategoryScrollView extends HorizontalScrollView {
+public class CategoryScrollStrip extends HorizontalScrollView implements
+        ViewPager.OnPageChangeListener {
 
     @InjectView(R.id.category_linear)
     LinearLayout mLinear;
 
+    private ViewPager mViewPager;
+
     private List<CategoryView> mCategorysView = new ArrayList<>();
 
-    public CategoryScrollView(Context context, AttributeSet attrs) {
+    public CategoryScrollStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CategoryScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CategoryScrollStrip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -43,6 +48,11 @@ public class CategoryScrollView extends HorizontalScrollView {
         setHorizontalScrollBarEnabled(false);
     }
 
+    @Override
+    protected void onScrollChanged(int x, int y, int oldX, int oldY){
+        super.onScrollChanged(x, y, oldX, oldY);
+    }
+
     public void addCategorys(List<Category> categories){
         mCategorysView.clear();
         mLinear.removeAllViews();
@@ -51,8 +61,10 @@ public class CategoryScrollView extends HorizontalScrollView {
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if( mCategorysView.indexOf(view) != -1){
-                        setSelectIndex(mCategorysView.indexOf(view));
+                    int index = mCategorysView.indexOf(view);
+                    if( index != -1){
+                        setSelectIndex(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 }
             });
@@ -63,9 +75,38 @@ public class CategoryScrollView extends HorizontalScrollView {
 
     public void setSelectIndex(int index) {
         if(index >= 0 && index < mCategorysView.size()) {
+            // move to show
+            CategoryView categoryView = mCategorysView.get(index);
+            int width = Utils.getDisplayWidth(getContext());
+            if(categoryView.getRight() > getScrollX() + width){
+                smoothScrollBy(categoryView.getRight() - (getScrollX() + width), 0);
+            }else if(categoryView.getLeft() < getScrollX()){
+                smoothScrollBy(categoryView.getLeft() - getScrollX(), 0);
+            }
+            // display selected
             for (int i = 0; i < mCategorysView.size(); i++) {
                 mCategorysView.get(i).setSelect(i == index);
             }
         }
+    }
+
+    public void setViewPager(ViewPager viewPager) {
+        this.mViewPager = viewPager;
+        mViewPager.setOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//        Log.i("CategoryScrollStrip", "offset=" + positionOffset);
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        setSelectIndex(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

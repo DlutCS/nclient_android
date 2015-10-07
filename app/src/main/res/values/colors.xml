@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="app_main_color">#336699</color>
-    <color name="category_selected">@color/app_main_color</color>
+    <color name="app_blue">#336699</color>
+    <color name="category_selected">@color/app_blue</color>
     <color name="category_normal">#9b9b9b</color>
     <color name="white">#ffffff</color>
+    <color name="text_black">#000000</color>
+    <color name="text_black_light">#494949</color>
+    <color name="text_white">#ffffff</color>
+    <color name="text_gray_dark">#4f4f4f</color>
+    <color name="text_light">#4d4d4d</color>
+    <color name="text_gray">#999999</color>
+    <color name="text_gray_light">#cccccc</color>
+    <color name="light_gray">#bcbcbc</color>
+    <drawable name="default_cover_background">@color/light_gray</drawable>
+
 </resources>

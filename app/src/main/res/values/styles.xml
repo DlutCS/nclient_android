@@ -12,8 +12,8 @@
 
     <style name="CustomActionBar"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background" tools:ignore="NewApi">@color/app_main_color</item>
-        <item name="background">@color/app_main_color</item>
+        <item name="android:background" tools:ignore="NewApi">@color/app_blue</item>
+        <item name="background">@color/app_blue</item>
     </style>
 
 </resources>
