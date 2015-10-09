@@ -3,6 +3,7 @@ package org.dlutcs.nclient_android.view;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,10 @@ import butterknife.InjectView;
 /**
  * Created by linwei on 15-10-6.
  */
-public class NewsListHeaderView extends FrameLayout {
+public class NewsListHeaderView extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     @InjectView(R.id.pager)
-    ViewPager mViewPager;
+    HackViewPager mViewPager;
     @InjectView(R.id.dots_view)
     LinearLayout mDotsView;
     @InjectView(R.id.news_title)
@@ -42,46 +43,93 @@ public class NewsListHeaderView extends FrameLayout {
         init();
     }
 
-    private void init(){
-        LayoutInflater.from(getContext()).inflate(
-                R.layout.view_news_list_header, this, true);
+    private void init() {
+        LayoutInflater.from(getContext())
+                .inflate(
+                        R.layout.view_news_list_header, this, true);
         ButterKnife.inject(this, this);
         mAutoScrollHandler = new AutoScrollHandler(mViewPager);
         mAutoScrollHandler.start();
         mAdapter = new NewsHeaderPagerAdapter();
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOnPageChangeListener(this);
     }
 
-    public void addNews(ArrayList<News> newsList){
+    public void addNews(ArrayList<News> newsList) {
         mNewsList.clear();
         mNewsList.addAll(newsList);
         mAdapter.notifyDataSetChanged();
+        if(mNewsList.size() > 0){
+            mViewPager.setCurrentItem(0);
+            selectIndex(0);
+        }
     }
 
-    public void onPause(){
+    public void onPause() {
         mAutoScrollHandler.pause();
     }
 
-    public void onResume(){
+    public void onResume() {
         mAutoScrollHandler.goOn();
     }
 
-    private class NewsHeaderPagerAdapter extends PagerAdapter{
+    public void selectIndex(int index) {
+        mDotsView.removeAllViews();
+        int dotsCount = mNewsList.size();
+        int dotSize = getResources().getDimensionPixelSize(R.dimen.dot_size);
+        int dotMargin = getResources().getDimensionPixelSize(R.dimen.dot_margin);
+        for (int i = 0; i < dotsCount; i++) {
+            ImageView imageView = new ImageView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dotSize, dotSize);
+            //最后一个点不需设置右边距
+            if (i != dotsCount - 1) {
+                params.rightMargin = dotMargin;
+            }
+            imageView.setLayoutParams(params);
+            imageView.setImageResource(R.drawable.promotion_dot_selector);
+            if (i == index) {
+                imageView.setSelected(true);
+            }
+            mDotsView.addView(imageView);
+        }
+        mNewsTitle.setText(mNewsList.get(index).title);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        selectIndex(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private class NewsHeaderPagerAdapter extends PagerAdapter {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             final News news = mNewsList.get(position);
-            ImageView imageView = new ImageView(container.getContext());
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageLoader.load(news.coverUrl).into(imageView);
-            container.addView(imageView);
+            View view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.view_pager_header,
+                            container, false);
+            ImageView imageView = (ImageView) view.findViewById(R.id.image_pager);
+            ImageLoader.load(news.coverUrl)
+                    .into(imageView);
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     NewsActivity.startActivity(news);
                 }
             });
-            return mNewsList.get(position);
+            // must use addView()
+            container.addView(view);
+            return view;
         }
 
         @Override
@@ -91,7 +139,12 @@ public class NewsListHeaderView extends FrameLayout {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return false;
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
         }
     }
 

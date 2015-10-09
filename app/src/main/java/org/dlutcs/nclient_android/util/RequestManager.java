@@ -96,6 +96,19 @@ public class RequestManager {
         return request;
     }
 
+    public NewRequest<NewsList> fetchLatestNews(int start, int count,
+                                                        Response.Listener<NewsList> listener,
+                                                        Response.ErrorListener errorListener){
+        String url = url(false, "/newslist/latest/");
+
+        Type type = new TypeToken<NewsList>(){}.getType();
+        NewRequest<NewsList> request = new NewRequest<>(
+                Request.Method.GET, url, type, listener, errorListener);
+        request.param("start", String.valueOf(start));
+        request.param("count", String.valueOf(count));
+        return request;
+    }
+
     public NewRequest<NewsList> fetchCategoryPopularNews(String categoryId,
                                                         int start, int count,
                                                         Response.Listener<NewsList> listener,

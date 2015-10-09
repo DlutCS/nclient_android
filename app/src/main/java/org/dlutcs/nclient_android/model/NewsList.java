@@ -12,7 +12,6 @@ public class NewsList {
     @SerializedName("newslist")
     public ArrayList<News> newsList;
 
-    public int total;
     public int start;
     public int count;
 

@@ -12,7 +12,7 @@ public class CategoryList {
     @SerializedName("categorys")
     public ArrayList<Category> categories;
 
-    public int total;
+    public int count;
 
     public CategoryList() {
         this.categories = new ArrayList<>();

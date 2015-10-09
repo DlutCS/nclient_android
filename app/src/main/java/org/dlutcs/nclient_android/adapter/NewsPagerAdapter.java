@@ -2,6 +2,7 @@ package org.dlutcs.nclient_android.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by linwei on 15-10-6.
  */
-public class NewsPagerAdapter extends FragmentStatePagerAdapter {
+public class NewsPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Category> mCategories = new ArrayList<>();
 

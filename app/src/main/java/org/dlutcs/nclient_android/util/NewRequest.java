@@ -2,10 +2,8 @@ package org.dlutcs.nclient_android.util;
 
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -16,18 +14,15 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by linwei on 15-10-6.
  *
  */
-public class NewRequest<T> extends Request<T>{
+public class NewRequest<T> extends OkRequest<T>{
 
     private Type mType;
     private static Gson gsonInstance;
-    private Response.Listener<T> mListener;
-    private HashMap<String, String> mParams;
 
     public Gson getGson(){
         if(gsonInstance == null){
@@ -36,16 +31,11 @@ public class NewRequest<T> extends Request<T>{
         return gsonInstance;
     }
 
-    public NewRequest(int method, String url, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
-    }
 
     public NewRequest(int method, String url, Type type, Response.Listener<T> listener,
                       Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
+        super(method, url, listener, errorListener);
         this.mType = type;
-        this.mListener = listener;
-        this.mParams = new HashMap<>();
     }
 
     @Override
@@ -76,17 +66,4 @@ public class NewRequest<T> extends Request<T>{
         }
     }
 
-    @Override
-    protected void deliverResponse(T response) {
-        mListener.onResponse(response);
-    }
-
-    @Override
-    protected Map<String, String> getParams() throws AuthFailureError {
-        return mParams;
-    }
-
-    public void param(String key, String value) {
-        mParams.put(key, value);
-    }
 }

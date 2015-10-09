@@ -19,6 +19,8 @@ public class News implements Parcelable {
     @SerializedName("alias_title")
     public String aliasTitle;
     public String content;
+    @SerializedName("content_short")
+    public String contentShort;
     @SerializedName("create_time")
     public String createTime;
     @SerializedName("comment_count")
@@ -46,11 +48,34 @@ public class News implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.title);
+        dest.writeString(this.aliasTitle);
+        dest.writeString(this.content);
+        dest.writeString(this.contentShort);
+        dest.writeString(this.createTime);
+        dest.writeInt(this.commentCount);
+        dest.writeInt(readCount);
+        dest.writeInt(likeCount);
+        dest.writeInt(dislikeCount);
+        dest.writeString(coverUrl);
+        dest.writeString(categoryId);
+        dest.writeString(authorId);
+
     }
 
     private News(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
+        this.aliasTitle = in.readString();
+        this.content = in.readString();
+        this.contentShort = in.readString();
+        this.createTime = in.readString();
+        this.commentCount = in.readInt();
+        this.readCount = in.readInt();
+        this.likeCount = in.readInt();
+        this.dislikeCount = in.readInt();
+        this.coverUrl = in.readString();
+        this.categoryId = in.readString();
+        this.authorId = in.readString();
     }
 
     public static Creator<News> CREATOR = new Creator<News>() {

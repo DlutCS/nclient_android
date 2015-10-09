@@ -13,5 +13,7 @@
     <color name="text_gray_light">#cccccc</color>
     <color name="light_gray">#bcbcbc</color>
     <drawable name="default_cover_background">@color/light_gray</drawable>
+    <color name="medium_gray">#909090</color>
+
 
 </resources>
