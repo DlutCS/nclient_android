@@ -27,6 +27,8 @@ import butterknife.InjectView;
  */
 public class NewsListHeaderView extends FrameLayout implements ViewPager.OnPageChangeListener {
 
+    @InjectView(R.id.layout)
+    View mLayout;
     @InjectView(R.id.pager)
     HackViewPager mViewPager;
     @InjectView(R.id.dots_view)
@@ -108,6 +110,14 @@ public class NewsListHeaderView extends FrameLayout implements ViewPager.OnPageC
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public void show(boolean show){
+        if(show){
+            mLayout.setVisibility(View.VISIBLE);
+        }else{
+            mLayout.setVisibility(View.GONE);
+        }
     }
 
     private class NewsHeaderPagerAdapter extends PagerAdapter {

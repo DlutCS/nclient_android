@@ -105,6 +105,7 @@ public class CategoryNewsFragment extends BaseFragment{
         super.onActivityCreated(savedInstanceState);
         mHeaderView = new NewsListHeaderView(getContext());
         mListView.addHeaderView(mHeaderView);
+        mHeaderView.show(false);
         mFooterView = new FooterView(getContext());
         mListView.addFooterView(mFooterView);
         mAdapter = new NewsListAdapter(getActivity());
@@ -128,6 +129,9 @@ public class CategoryNewsFragment extends BaseFragment{
                                 mHeaderView.addNews(new ArrayList<>(result.newsList.subList(0, 4)));
                             }else{
                                 mHeaderView.addNews(result.newsList);
+                            }
+                            if(result.count > 0){
+                                mHeaderView.show(true);
                             }
                         }
                         mAdapter.addAll(result.newsList);

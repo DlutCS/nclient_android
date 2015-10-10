@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class CategoryList {
 
-    @SerializedName("categorys")
     public ArrayList<Category> categories;
 
     public int count;
