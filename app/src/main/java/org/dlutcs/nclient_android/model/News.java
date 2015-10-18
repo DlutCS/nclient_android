@@ -37,6 +37,8 @@ public class News implements Parcelable {
     public String categoryId;
     @SerializedName("author_id")
     public String authorId;
+    @SerializedName("author")
+    public String author;
 
 
     @Override

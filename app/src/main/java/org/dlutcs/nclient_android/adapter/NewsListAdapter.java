@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.dlutcs.nclient_android.R;
+import org.dlutcs.nclient_android.activity.NewsDetailActivity;
 import org.dlutcs.nclient_android.model.News;
 import org.dlutcs.nclient_android.util.ImageLoader;
+import org.dlutcs.nclient_android.util.NewRequest;
 import org.dlutcs.nclient_android.util.Utils;
 
 import butterknife.ButterKnife;
@@ -25,7 +27,7 @@ public class NewsListAdapter extends BaseArrayAdapter<News>{
     }
 
     @Override
-    public View getView(News item, LayoutInflater inflater, int position, View convertView,
+    public View getView(final News item, LayoutInflater inflater, int position, View convertView,
                         ViewGroup parent) {
         ViewHolder holder;
         if(convertView == null){
@@ -39,6 +41,12 @@ public class NewsListAdapter extends BaseArrayAdapter<News>{
         holder.contentShort.setText(item.contentShort);
         holder.createTime.setText(Utils.getTime(item.createTime));
         ImageLoader.load(item.coverUrl).into(holder.cover);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewsDetailActivity.startActivity(getContext(), item.id);
+            }
+        });
         return convertView;
     }
 

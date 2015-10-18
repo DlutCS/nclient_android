@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.dlutcs.nclient_android.R;
+import org.dlutcs.nclient_android.activity.NewsDetailActivity;
 import org.dlutcs.nclient_android.model.News;
 import org.dlutcs.nclient_android.util.AutoScrollHandler;
 import org.dlutcs.nclient_android.util.ImageLoader;
@@ -134,7 +135,8 @@ public class NewsListHeaderView extends FrameLayout implements ViewPager.OnPageC
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NewsActivity.startActivity(news);
+                    NewsDetailActivity.startActivity(getContext(), news.id);
+
                 }
             });
             // must use addView()

@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.dlutcs.nclient_android.BuildConfig;
 import org.dlutcs.nclient_android.model.CategoryList;
+import org.dlutcs.nclient_android.model.News;
 import org.dlutcs.nclient_android.model.NewsList;
 
 import java.lang.reflect.Type;
@@ -120,6 +121,17 @@ public class RequestManager {
                 Request.Method.GET, url, type, listener, errorListener);
         request.param("start", String.valueOf(start));
         request.param("count", String.valueOf(count));
+        return request;
+    }
+
+    public NewRequest<News> fetchNewsDetail(String newsId,
+                                                         Response.Listener<News> listener,
+                                                         Response.ErrorListener errorListener){
+        String url = url(false, String.format("/news/%1$s/", newsId));
+
+        Type type = new TypeToken<News>(){}.getType();
+        NewRequest<News> request = new NewRequest<>(
+                Request.Method.GET, url, type, listener, errorListener);
         return request;
     }
 

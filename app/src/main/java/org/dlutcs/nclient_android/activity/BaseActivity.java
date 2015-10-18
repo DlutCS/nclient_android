@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.dlutcs.nclient_android.R;
+import org.dlutcs.nclient_android.util.NewRequest;
+import org.dlutcs.nclient_android.util.RequestManager;
 
 /**
  * Created by linwei on 15-10-5.
@@ -31,6 +33,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.initStatusWindow();
+    }
+
+    public RequestManager getRequestManager() {
+        return RequestManager.getInstance();
+    }
+
+    public void addRequest(NewRequest request) {
+        getRequestManager().addToRequestQueue(request);
     }
 
 }
