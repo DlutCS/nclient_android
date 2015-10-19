@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ListView;
@@ -66,6 +67,17 @@ public class NewsDetailActivity extends BaseActivity{
         mNewsId = getIntent().getStringExtra("newsid");
         mProgressBar.setVisibility(View.VISIBLE);
         fetchNews();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void fetchNews(){

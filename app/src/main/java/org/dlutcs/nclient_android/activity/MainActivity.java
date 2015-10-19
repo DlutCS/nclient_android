@@ -1,6 +1,7 @@
 package org.dlutcs.nclient_android.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,6 +16,12 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setLogo(R.mipmap.ic_launcher);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }*/
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_container, MainFragment.newInstance())
                 .commitAllowingStateLoss();
