@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -103,6 +104,7 @@ public class NewsDetailActivity extends BaseActivity{
         mTitle.setText(news.title);
         mFrom.setText(news.author);
         mTime.setText(Utils.getTime(news.createTime));
-        mContentWebVew.loadData(news.content,"text/html; charset=UTF-8", null);
+        mContentWebVew.loadData("<style>img{display: inline; height: auto; max-width: 100%;}</style>"
+                + news.content, "text/html; charset=UTF-8", null);
     }
 }
